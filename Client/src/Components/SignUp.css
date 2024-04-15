@@ -1,0 +1,101 @@
+/* General styles */
+.signUpForm {
+    display: flex;
+    height: 100vh;
+    font-family: 'Arial', sans-serif;
+    background-color: black;
+}
+
+.left {
+    width: 50%;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #333;
+}
+
+.signUpGif {
+    width: 100%; /* Makes the image fully responsive within its container */
+    max-width: 100%; /* Limits image width to 100% of its container */
+    height: 100%; /* Keeps the image's aspect ratio intact */
+    border-radius: 8px; /* Optional: adds rounded corners to the image */
+}
+
+.right {
+    width: 50%;
+    border-radius: 40px;
+    background-color: #eaf9d1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.header h3 {
+    margin-bottom: 20px;
+}
+
+.inputs div {
+    margin-bottom: 20px;
+}
+
+input[type="password"] {
+    width: 350px;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    background-color: transparent;
+    outline: none;
+}
+
+input[type="text"] {
+    width: 350px;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    background-color: transparent;
+    outline: none;
+}
+
+input[type="text"]:focus {
+    border-bottom: 2px solid #007bff;
+}
+
+input::placeholder {
+    color: #888;
+}
+
+.submitButton {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submitButton:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .left{
+        display: none;
+    }
+    .signUpForm {
+        display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+    .right {
+        width: 80%;
+        height: 80%;
+    }
+}
