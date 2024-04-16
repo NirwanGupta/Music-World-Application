@@ -1,12 +1,12 @@
 /* General styles */
-.signUpForm {
+.LoginForm {
     display: flex;
     height: 100vh;
     font-family: 'Arial', sans-serif;
     background-color: black;
 }
 
-.left {
+.right {
     width: 50%;
     background-color: black;
     display: flex;
@@ -23,7 +23,7 @@
     border-radius: 8px; /* Optional: adds rounded corners to the image */
 }
 
-.right {
+.left {
     width: 50%;
     border-radius: 40px;
     /* background-color: #eaf9d1; */
@@ -87,9 +87,11 @@ input::placeholder {
 .submitButton:hover {
     background-color: #0056b3;
 }
-
+.forgotPassword{
+    margin-top: 10px;
+}
 @media (max-width: 768px) {
-    .left{
+    .right{
         display: none;
     }
     .signUpForm {
@@ -97,7 +99,7 @@ input::placeholder {
     align-items: center;
     justify-content: center;
     }
-    .right {
+    .left {
         width: 80%;
         height: 80%;
     }
