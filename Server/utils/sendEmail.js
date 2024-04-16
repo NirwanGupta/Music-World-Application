@@ -5,10 +5,8 @@ const sendEmail = async({to,html,subject})=>{
     const transporter=nodemailer.createTransport(nodemailerConfig);
     
     return transporter.sendMail({
-      from: '"Music World" <musicworldapplication@gmail.com>',
-      to,
-      subject,
-      html,
+        from:'"Music World Application" <aryawart.kathpal2909@gmail.com>',
+        to,subject,html
     });
 }
 

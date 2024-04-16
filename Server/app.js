@@ -2,6 +2,8 @@ require(`dotenv`).config();
 require(`express-async-errors`);
 
 const express = require(`express`);
+// const AWS = require(`aws-sdk`);
+// const multer = require(`multer`);
 const app = express();
 
 const connectDB = require(`./db/connect`);
@@ -16,7 +18,7 @@ cloudinary.config({
 });
 
 const authRoutes = require(`./routes/authRoutes`);
-// const userRoutes = require('./routes/userRoutes');
+const userRoutes = require('./routes/userRoutes');
 // const lostAndFoundRoutes=require('./routes/lostAndFoundRoutes');
 // const reportRoutes=require('./routes/reportRoutes');
 // const feedbackRoutes= require('./routes/feebackRoutes');
@@ -29,12 +31,13 @@ const cookieParser = require(`cookie-parser`);
 const morgan = require(`morgan`);
 
 app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 app.use(fileUpload({useTempFiles: true}));
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use(morgan(`tiny`));
 
 app.use(`/api/v1/auth`, authRoutes);
-// app.use('/api/user',userRoutes);
+app.use('/api/v1/user', userRoutes);
 // app.use('/api/items',lostAndFoundRoutes);
 // app.use('/api/admin/report',reportRoutes);
 // app.use('/api/admin/feedback',feedbackRoutes);
