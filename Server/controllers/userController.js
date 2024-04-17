@@ -44,7 +44,7 @@ const updateUser = async (req, res) => {
         user.phone = phone;
     }
     if(image) {
-        if(user.image !== `https://res.cloudinary.com/drnrsxnx9/image/upload/v1713185399/Music-World/Profile-Images/default-avatar-profile-icon-vector-social-media-user-image-182145777_mqovgx.webp`) {
+        if(user.image !== `https://res.cloudinary.com/dbmeb5p2d/image/upload/v1713210224/Music-World/Profile-Images/awdbqsqikk5mqxliclws.webp`) {
             function getImagePublicId(cloudinaryUrl) {
                 const parts = cloudinaryUrl.split("/");
                 const publicIdPart = parts[parts.length - 1].split(".")[0];
@@ -57,17 +57,16 @@ const updateUser = async (req, res) => {
             console.log(imagePublicId);
 
             await cloudinary.api
-                .delete_resources(
-                    [`Music-World/Profile-Images/${imagePublicId}`], {
-                    type: "upload",
-                    resource_type: "image",
-                })
-                .then((result) => {
+            .delete_resources([`Music-World/Profile-Images/${imagePublicId}`], {
+                type: "upload",
+                resource_type: "image",
+            })
+            .then((result) => {
                 // console.log("Deleted resources:", result);
-                })
-                .catch((error) => {
-                    console.error("Error deleting resources:", error);
-                });
+            })
+            .catch((error) => {
+                console.error("Error deleting resources:", error);
+            });
         }
         user.image = image;
     }
@@ -136,32 +135,32 @@ const deleteUser = async (req, res) => {
         throw new customErrors.NotFoundError("No user found");
     }
 
-    if (userImage !== `https://res.cloudinary.com/drnrsxnx9/image/upload/v1713185399/Music-World/Profile-Images/default-avatar-profile-icon-vector-social-media-user-image-182145777_mqovgx.webp`) {
-    // console.log("Inside deleting");
+    if(userImage !== `https://res.cloudinary.com/dbmeb5p2d/image/upload/v1713210224/Music-World/Profile-Images/awdbqsqikk5mqxliclws.webp`) {
+      // console.log("Inside deleting");
 
-    function getImagePublicId(cloudinaryUrl) {
+      function getImagePublicId(cloudinaryUrl) {
         const parts = cloudinaryUrl.split("/");
         const publicIdPart = parts[parts.length - 1].split(".")[0];
         return publicIdPart;
-    }
+      }
 
-    const cloudinaryUrl = user.image;
-    const imagePublicId = getImagePublicId(cloudinaryUrl);
+      const cloudinaryUrl = user.image;
+      const imagePublicId = getImagePublicId(cloudinaryUrl);
 
-    console.log(imagePublicId);
+      console.log(imagePublicId);
 
-    await cloudinary.api
+      await cloudinary.api
         .delete_resources([`Music-World/Profile-Images/${imagePublicId}`], {
-            type: "upload",
-            resource_type: "image",
+          type: "upload",
+          resource_type: "image",
         })
         .then((result) => {
-            // console.log("Deleted resources:", result);
+          // console.log("Deleted resources:", result);
         })
         .catch((error) => {
-            console.error("Error deleting resources:", error);
+          console.error("Error deleting resources:", error);
         });
-  }
+    }
 
   res.status(StatusCodes.OK).json({ msg: "User deleted successfully" });
 };
@@ -177,6 +176,19 @@ const imageUpload = async (req, res) => {
     });
     fs.unlinkSync(req.files.image.tempFilePath);
     return res.status(StatusCodes.OK).json({ image: { src: result.secure_url } });
+}
+
+const becomeSinger = async (req, res) => {
+    const {bio} = req.body;
+    if(!bio) {
+        throw new customErrors.BadRequestError(`Please provide all credentials`);
+    }
+    const user = await User.findOne({_id: req.user.userId});
+    const name = req.body.name || user.name;
+    const subject = "Request To Join as Singer";
+    const origin = "http://localhost:5000";
+    await sendContactUsEmail({ name, email: user.email, subject, bio, userId: req.user.userId, origin });
+    res.status(StatusCodes.OK).json({msg: 'Email sent successfully'});
 }
 
 module.exports = {

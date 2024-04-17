@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema(
     verificationToken: String,
     image: {
       type: String,
-      default: `https://res.cloudinary.com/drnrsxnx9/image/upload/v1713185399/Music-World/Profile-Images/default-avatar-profile-icon-vector-social-media-user-image-182145777_mqovgx.webp`,
+      default: `https://res.cloudinary.com/dbmeb5p2d/image/upload/v1713210224/Music-World/Profile-Images/awdbqsqikk5mqxliclws.webp`,
     },
     isVerified: {
       type: Boolean,
