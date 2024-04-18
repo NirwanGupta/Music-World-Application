@@ -20,6 +20,7 @@ cloudinary.config({
 const authRoutes = require(`./routes/authRoutes`);
 const userRoutes = require('./routes/userRoutes');
 const songRoutes = require('./routes/songRoutes');
+const singerRoutes = require('./routes/singerRoutes');
 // const lostAndFoundRoutes=require('./routes/lostAndFoundRoutes');
 // const reportRoutes=require('./routes/reportRoutes');
 // const feedbackRoutes= require('./routes/feebackRoutes');
@@ -40,6 +41,7 @@ app.use(morgan(`tiny`));
 app.use(`/api/v1/auth`, authRoutes);
 app.use('/api/v1/user', userRoutes);
 app.use(`/api/v1/song`, songRoutes);
+app.use('/api/v1/singer', singerRoutes);
 // app.use('/api/items',lostAndFoundRoutes);
 // app.use('/api/admin/report',reportRoutes);
 // app.use('/api/admin/feedback',feedbackRoutes);
