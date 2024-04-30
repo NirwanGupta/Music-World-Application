@@ -5,5 +5,16 @@ const sendVerificationEmail=require('./sendVerificationEmail');
 const sendResetPasswordEmail=require('./sendResetPasswordEmail');
 const createHash=require('./createHash');
 const sendContactUsEmail = require(`./sendContactUsEmail`);
+const sendSingerRequestEmail = require(`./sendSingerRequestEmail`);
 
-module.exports ={createJWT,isTokenValid,attachCookiesToResponse,createTokenUser,checkPermissions,sendVerificationEmail,sendResetPasswordEmail,createHash,sendContactUsEmail};
+module.exports ={createJWT,
+    isTokenValid,
+    attachCookiesToResponse,
+    createTokenUser,
+    checkPermissions,
+    sendVerificationEmail,
+    sendResetPasswordEmail,
+    createHash,
+    sendContactUsEmail,
+    sendSingerRequestEmail,
+};

@@ -11,7 +11,31 @@ const getAllSongs = async (req, res) => {
     //     path: "singer",
     //     select: "name duration audio image",
     // });
-    const songs = await Song.find({});
+    const { songName, artist, genre, language, sort } = req.query;
+    const queryObject = {};
+    
+    if(songName) {
+        queryObject.name = { $regex: songName, $options: `i` };
+    }
+    if(artist) {
+        queryObject.singerName = { $regex: artist, $options: `i` };
+    }
+    if(genre) {
+        queryObject.genre = genre;
+    }
+    if(language) {
+        queryObject.language = language;
+    }
+    let filteredSongs = Song.find(queryObject);
+    
+    if(sort === "a-z") {
+        filteredSongs.sort('name');
+    }
+    if(sort === 'z-a') {
+        filteredSongs.sort('-name');
+    }
+    
+    const songs = await filteredSongs;
     res.status(StatusCodes.OK).json({songs});
 };
 
@@ -56,7 +80,7 @@ const addSong = async (req, res) => {
 };
 
 const audioUpload = async (req, res) => {
-    if(req.user.role !== "admin") {
+    if(req.user.role !== "admin" && req.user.role !== "artist") {
         throw new customErrors.UnauthorizedError("You are not an Artist, thus you are not allowed to upload songs");
     }
     if (!req.files || !req.files.audio) {

@@ -9,7 +9,9 @@ const app = express();
 const connectDB = require(`./db/connect`);
 
 const fileUpload = require(`express-fileupload`);
+// const multer = require(`multer`);
 
+// const upload = multer({ dest: "uploads/" });
 const cloudinary = require(`cloudinary`).v2;
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -21,6 +23,7 @@ const authRoutes = require(`./routes/authRoutes`);
 const userRoutes = require('./routes/userRoutes');
 const songRoutes = require('./routes/songRoutes');
 const singerRoutes = require('./routes/singerRoutes');
+const playlistRoutes = require('./routes/playlistRoutes');
 // const lostAndFoundRoutes=require('./routes/lostAndFoundRoutes');
 // const reportRoutes=require('./routes/reportRoutes');
 // const feedbackRoutes= require('./routes/feebackRoutes');
@@ -42,6 +45,7 @@ app.use(`/api/v1/auth`, authRoutes);
 app.use('/api/v1/user', userRoutes);
 app.use(`/api/v1/song`, songRoutes);
 app.use('/api/v1/singer', singerRoutes);
+app.use('/api/v1/playlists', playlistRoutes);
 // app.use('/api/items',lostAndFoundRoutes);
 // app.use('/api/admin/report',reportRoutes);
 // app.use('/api/admin/feedback',feedbackRoutes);

@@ -2,10 +2,11 @@ const User = require(`../models/User`);
 const Token = require(`../models/Token`);
 const {StatusCodes} = require(`http-status-codes`);
 const customErrors = require(`../errors`);
-const {sendVerificationEmail} = require(`../utils`);
+const {sendVerificationEmail, sendSingerRequestEmail} = require(`../utils`);
 const crypto = require(`crypto`);
 const cloudinary = require("cloudinary").v2;
 const fs = require(`fs`);
+// const {upload} = require(`../utils/multerConfig`);
 
 const getAllUsers = async (req, res) => {
     const users = await User.find({});
@@ -180,6 +181,9 @@ const imageUpload = async (req, res) => {
 
 const becomeSinger = async (req, res) => {
     const {bio} = req.body;
+    console.log(bio);
+    const { audioFiles } = req.files;
+    console.log(audioFiles);
     if(!bio) {
         throw new customErrors.BadRequestError(`Please provide all credentials`);
     }
@@ -187,7 +191,9 @@ const becomeSinger = async (req, res) => {
     const name = req.body.name || user.name;
     const subject = "Request To Join as Singer";
     const origin = "http://localhost:5000";
-    await sendContactUsEmail({ name, email: user.email, subject, bio, userId: req.user.userId, origin });
+    const verificationToken = crypto.randomBytes(40).toString(`hex`);
+    user.verificationToken = verificationToken;
+    await sendSingerRequestEmail({ email: user.email, subject: subject, name: user.name, verificationToken: user.verificationToken, audioFiles, origin });
     res.status(StatusCodes.OK).json({msg: 'Email sent successfully'});
 }
 
@@ -198,4 +204,5 @@ module.exports = {
     deleteUser,
     updatePassword,
     imageUpload,
+    becomeSinger,
 };

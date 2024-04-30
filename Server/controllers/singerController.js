@@ -49,7 +49,7 @@ const addArtist = async (req, res) => {
 
 const uploadImages = async (req, res) => {
     const user = await User.findOne({ _id: req.user.userId });
-    if(user.role !== "admin") {
+    if(user.role !== "artist" && user.role !== "admin") {
         throw new customErrors.UnauthorizedError("You are not an artist, you cannot access this route");
     }
     if (!req.files || !req.files.image || !Array.isArray(req.files.image)) {
