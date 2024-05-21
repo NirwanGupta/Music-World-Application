@@ -23,6 +23,10 @@
     border-radius: 8px; /* Optional: adds rounded corners to the image */
 }
 
+.headersignup h3{
+    color: aliceblue;
+}
+
 .right {
     width: 50%;
     border-radius: 40px;
@@ -37,14 +41,14 @@
 
 .header h3 {
     margin-bottom: 20px;
-    color: white;
+    color: rgb(213, 210, 210);
 }
 
 .inputs div {
     margin-bottom: 20px;
 }
 
-input[type="password"] {
+.passwordInput {
     width: 350px;
     padding: 10px;
     font-size: 16px;
@@ -54,7 +58,7 @@ input[type="password"] {
     outline: none;
 }
 
-input[type="text"] {
+.name,.emailInput,.phone{
     width: 350px;
     padding: 10px;
     font-size: 16px;

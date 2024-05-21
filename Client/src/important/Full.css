@@ -1,0 +1,15 @@
+.navbar, .leftmenu, .toggledmenu {
+    transition: all 0.8s ease; /* Smooth transitions for all */
+}
+
+ .menu-active {
+    display: block; /* Show the menu */
+  }
+  
+  .menu-exit {
+    display: none; /* Hide the menu */
+  }
+  
+  .downintrection{
+    display: flex;
+  }
