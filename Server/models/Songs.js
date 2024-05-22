@@ -1,4 +1,5 @@
 const mongoose = require(`mongoose`);
+// const Interaction = require(`./interaction`);
 
 const GIFS = [
   `https://res.cloudinary.com/dbmeb5p2d/image/upload/v1713212792/Music-World/Music-GIFS/hjhkst6p9zofysk1edkl.gif`,
@@ -43,10 +44,7 @@ const songSchema = new mongoose.Schema(
     },
     language: {
       type: String,
-      enum: [
-        "Hindi",
-        "English",
-      ],
+      enum: ["Hindi", "English", "Punjabi"],
       required: [true, "Please provide language"],
     },
     genre: {
@@ -73,6 +71,34 @@ const songSchema = new mongoose.Schema(
         "Ambient",
         "Gospel",
         "Funk",
+        "Disco",
+        "Techno",
+        "Trance",
+        "Ska",
+        "House",
+        "Trap",
+        "Dubstep",
+        "Chillout",
+        "Experimental",
+        "World",
+        "Latin",
+        "Opera",
+        "Chamber",
+        "Acoustic",
+        "New Age",
+        "Grime",
+        "Drum and Bass",
+        "Psychedelic",
+        "Space",
+        "Post-Rock",
+        "Progressive",
+        "Hardcore",
+        "Breakbeat",
+        "IDM (Intelligent Dance Music)",
+        "Glitch",
+        "Noise",
+        "Darkwave",
+        "Vaporwave",
       ],
       required: [true, "please provide genre"],
     },
@@ -80,10 +106,17 @@ const songSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please provide duration"],
     },
+    likedBy: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     likes: {
       type: Number,
       default: 0,
     },
+    // pastFiveDays: [Interaction],
   },
   { timestamps: true }
 );

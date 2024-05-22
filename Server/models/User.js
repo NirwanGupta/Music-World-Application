@@ -55,6 +55,23 @@ const userSchema = new mongoose.Schema(
     passwordTokenExpirationDate: {
       type: Date,
     },
+    likedSongs: [{
+      type: mongoose.Schema.ObjectId,
+      ref: 'Song',
+    }],
+    likedSingers: [{
+      type: mongoose.Schema.ObjectId,
+      ref: 'Singer',
+    }],
+    favoriteGenres: [String],
+    topArtists: [{
+      type: mongoose.Schema.ObjectId,
+      ref: 'Artist',
+    }],
+    recentlyPlayed: [{
+      type: mongoose.Schema.ObjectId,
+      ref: 'Song',
+    }],
   },
   { timestamps: true }
 );

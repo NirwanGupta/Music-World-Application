@@ -9,6 +9,8 @@ const {
     updatePlaylist,
     deletePlaylist,
     sharePlaylist,
+    likedSongs,
+    likedSingers
 } = require("../controllers/playlistController");
 const { 
     authenticateUser, 
@@ -18,6 +20,8 @@ const {
 router.route("/newPlaylist").post([authenticateUser], createPlaylist);
 router.route("/allPlaylists").get([authenticateUser], getAllPlaylist);
 router.route("/currentUserPlaylists").get([authenticateUser], GetCurrectUserPlaylists);
+router.route("/likedSongs").get([authenticateUser], likedSongs);
+router.route("/likedSingers").get([authenticateUser], likedSingers);
 router.route("/share/:id").get([authenticateUser], sharePlaylist);
 router.route("/:id").patch([authenticateUser], updatePlaylist)
 router.route("/:id").get([authenticateUser], getSinglePlaylist);

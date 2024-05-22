@@ -24,16 +24,23 @@ const userRoutes = require('./routes/userRoutes');
 const songRoutes = require('./routes/songRoutes');
 const singerRoutes = require('./routes/singerRoutes');
 const playlistRoutes = require('./routes/playlistRoutes');
-// const lostAndFoundRoutes=require('./routes/lostAndFoundRoutes');
-// const reportRoutes=require('./routes/reportRoutes');
-// const feedbackRoutes= require('./routes/feebackRoutes');
-// const contactUsRoutes = require(`./routes/contactUsRoutes`);
+const logActivityRoutes = require(`./routes/logActivityRoute`);
 
 const errorHandlerMiddleware = require(`./middleware/error-handler`);
 const notFoundMiddleware = require(`./middleware/not-found`);
+// const sessionHandler = require("./middleware/sessionMiddleware");
 
 const cookieParser = require(`cookie-parser`);
 const morgan = require(`morgan`);
+
+const {cronTask} = require(`./utils`);
+
+// app.use(session({
+//   secret: 'your_secret_key',
+//   resave: false,
+//   saveUninitialized: true,
+// }));
+// app.use(sessionHandler);
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
@@ -46,10 +53,7 @@ app.use('/api/v1/user', userRoutes);
 app.use(`/api/v1/song`, songRoutes);
 app.use('/api/v1/singer', singerRoutes);
 app.use('/api/v1/playlists', playlistRoutes);
-// app.use('/api/items',lostAndFoundRoutes);
-// app.use('/api/admin/report',reportRoutes);
-// app.use('/api/admin/feedback',feedbackRoutes);
-// app.use(`/api/contact-us`, contactUsRoutes);
+app.use(`/api/v1`, logActivityRoutes);
 
 const port = process.env.PORT || 5000;
 
@@ -60,7 +64,11 @@ const start = async() => {
     try {
         await connectDB(process.env.MONGO_URI);
         console.log("Connection established");
-        app.listen(port, console.log(`Server listening on port ${port}`));
+        app.listen(port, () => {
+            console.log(cronTask);
+            cronTask.start();
+            console.log(`Server listening on port ${port}`);
+        });
     } catch (error) {
         console.log(error);
     }

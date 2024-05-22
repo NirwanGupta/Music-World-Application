@@ -27,7 +27,15 @@ const singerSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
-    }
+    },
+    likedBy: [{
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+    }],
+    likes: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true ,
   toJSON: {virtuals: true}, toObject: {virtuals: true}

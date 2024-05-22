@@ -1,13 +1,17 @@
-const {createJWT,isTokenValid,attachCookiesToResponse} = require('./jwt');
-const createTokenUser= require('./createTokenUser');
-const checkPermissions=require('./checkPermissions');
-const sendVerificationEmail=require('./sendVerificationEmail');
-const sendResetPasswordEmail=require('./sendResetPasswordEmail');
-const createHash=require('./createHash');
-const sendContactUsEmail = require(`./sendContactUsEmail`);
-const sendSingerRequestEmail = require(`./sendSingerRequestEmail`);
+const { createJWT, isTokenValid, attachCookiesToResponse } = require('./jwt');
+const createTokenUser = require('./createTokenUser');
+const checkPermissions = require('./checkPermissions');
+const sendVerificationEmail = require('./sendVerificationEmail');
+const sendResetPasswordEmail = require('./sendResetPasswordEmail');
+const createHash = require('./createHash');
+const sendContactUsEmail = require('./sendContactUsEmail');
+const sendSingerRequestEmail = require('./sendSingerRequestEmail');
+const cronTask = require('./cron');
 
-module.exports ={createJWT,
+console.log("response");
+
+module.exports = {
+    createJWT,
     isTokenValid,
     attachCookiesToResponse,
     createTokenUser,
@@ -17,4 +21,5 @@ module.exports ={createJWT,
     createHash,
     sendContactUsEmail,
     sendSingerRequestEmail,
+    cronTask,
 };

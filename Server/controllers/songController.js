@@ -4,6 +4,9 @@ const Singer = require(`../models/Singers`);
 const User = require("../models/User");
 const cloudinary = require(`cloudinary`).v2;
 const { StatusCodes } = require(`http-status-codes`);
+// const {response} = require(`../utils/responseAI`);
+const {moodDetector, response} = require(`../utils/AI_integration`);
+const userActivity = require(`../models/Activity`);
 
 const getAllSongs = async (req, res) => {
     //  this is to populate artist to songs
@@ -33,6 +36,9 @@ const getAllSongs = async (req, res) => {
     }
     if(sort === 'z-a') {
         filteredSongs.sort('-name');
+    }
+    if(sort == "likes") {
+        filteredSongs.sort('likes');
     }
     
     const songs = await filteredSongs;
@@ -236,11 +242,106 @@ const updateSong = async (req, res) => {
     res.status(StatusCodes.OK).json({ msg: "Song updated successfully" });
 };
 
+const likeSong = async (req, res) => {
+    const { id: songId } = req.params;
+    if(!songId) {
+        throw new customErrors.BadRequestError("Please provide song ID");
+    }
+    const song = await Song.findOne({ _id: songId })
+    if(!song) {
+        throw new customErrors.notFoundError("No song found");
+    }
+    const alreadyLiked = song.likedBy.includes(req.user.userId);
+    if(alreadyLiked) {
+        song.likedBy = song.likedBy.filter((id) => id.toString() !== req.user.userId.toString());
+    }
+    else {
+        song.likedBy.push(req.user.userId);
+    }
+    song.likes = song.likedBy.length;
+    const likes = song.likes;
+
+    const user = await User.findOne({ _id: req.user.userId });
+    if(!user) {
+        throw new customErrors.UnauthenticatedError("No user found");
+    }
+    
+    if(alreadyLiked) {
+        user.likedSongs = user.likedSongs.filter((id) => id.toString() !== songId.toString());
+    }
+    else{
+        user.likedSongs.push(songId);
+    }
+
+    await song.save();
+    await user.save();
+
+    res.status(StatusCodes.OK).json({ message: alreadyLiked ? "Song unliked" : "Song liked", likes: likes });
+};
+
+const songsWRTmood = async (req, res) => {
+    const { mood } = req.body;
+    if (!mood || mood.length === 0) {
+        throw new customErrors.BadRequestError("Please provide mood");
+    }
+    const generatedGenres = await moodDetector(mood);
+    const genreArray = generatedGenres.flat();
+
+    const songs = await Song.find({ genre: { $in: genreArray } });
+    res.status(StatusCodes.OK).json({ songs, genreArray });
+}
+
+const respondToQuestion = async (req, res) => {
+    const {prompt} = req.body;
+    if(!prompt || prompt.length<5 || prompt.length>1000) {
+        throw new customErrors.BadRequestError("The prompt length should be between 5 and 1000");
+    }
+    console.log("Correct till here");
+    const generateResponse = await response(prompt);
+    res.status(StatusCodes.OK).json({ response: generateResponse });
+}
+
+const updateUserProfile = async (userId) => {
+    const activities = await userActivity.find({ userId });
+
+    const genreCount = {};
+    const artistCount = {};
+    const recentPlays = [];
+
+    for (const activity of activities) {
+        if(activity.activityType === "play") {
+            const song = await Song.findById(activity.songId);
+            genreCount[song.genre] = (genreCount[song.genre] || 0) + 1;
+            artistCount[song.singer] = (artistCount[song.singer] || 0) + 1;
+            if(recentPlays.length < 10) {
+                recentPlays.push(song._id);
+            }
+        }
+    }
+
+    const favoriteGenres = Object.keys(genreCount).sort(
+        (a, b) => genreCount[b] - genreCount[a]
+    );
+    const topArtists = Object.keys(artistCount).sort(
+        (a, b) => artistCount[b] - artistCount[a]
+    );
+
+    await User.findOneAndUpdate(
+        { _id: userId },
+        { favoriteGenres, topArtists, recentlyPlayed: recentPlays },
+        { upsert: true }
+    );
+};
+
 module.exports = {
-  getAllSongs,
-  getSingleSong,
-  addSong,
-  updateSong,
-  deleteSong,
-  audioUpload,
+    getAllSongs,
+    getSingleSong,
+    addSong,
+    updateSong,
+    deleteSong,
+    audioUpload,
+    likeSong,
+    songsWRTmood,
+    respondToQuestion,
+    updateUserProfile,
 };

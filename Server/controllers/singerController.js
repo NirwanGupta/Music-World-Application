@@ -7,12 +7,34 @@ const fs = require(`fs`);
 const User = require("../models/User");
 
 const getAllArtists = async (req, res) => {
-    const allArtists = await Singer.find({}).populate(`songs`);
-    if(!allArtists || allArtists.length === 0) {
-        throw new customErrors.notFoundError("No artist found");
+    const { artist, sort } = req.query;
+    const queryObject = {};
+
+    if(artist) {
+        queryObject.name = { $regex: artist, $options: 'i' };
     }
+
+    let query = Singer.find(queryObject);
+
+    if(sort === 'a-z') {
+        query = query.sort({ name: 1 });
+    }
+    else if(sort === 'z-a') {
+        query = query.sort({ name: -1 });
+    }
+    else if(sort === 'likes') {
+        query = query.sort({ likes: -1 });
+    }
+
+    const allArtists = await query.populate('songs');
+
+    if(!allArtists || allArtists.length === 0) {
+        throw new customErrors.notFoundError('No artists found');
+    }
+
     res.status(StatusCodes.OK).json({ artists: allArtists, count: allArtists.length });
 };
+
 
 const getSingleArtist = async (req, res) => {
     const {id: artistId} = req.params;
@@ -169,6 +191,43 @@ const deleteArtist = async (req, res) => {
     res.status(StatusCodes.OK).json({ msg: "Artist along with all his songs deleted" });
 };
 
+const likeSinger = async (req, res) => {
+    const { id: singerId } = req.params;
+    if(!singerId) {
+        throw new customErrors.BadRequestError("Please provide singer ID");
+    }
+    const singer = await Singer.findOne({ _id: singerId });
+    if(!singer) {
+        throw new customErrors.notFoundError("No singer found");
+    }
+    const alreadyLiked = singer.likedBy.includes(req.user.userId);
+    if(alreadyLiked) {
+        singer.likedBy = singer.likedBy.filter((id) => id.toString() !== req.user.userId.toString());
+    }
+    else {
+        singer.likedBy.push(req.user.userId.toString());
+    }
+    singer.likes = singer.likedBy.length;
+    const likes = singer.likes;
+
+    const user = await User.findOne({ _id: req.user.userId });
+    if(!user) {
+        throw new customErrors.UnauthenticatedError("No user found");
+    }
+    
+    if(alreadyLiked) {
+        user.likedSingers = user.likedSingers.filter((id) => id.toString() !== singerId.toString());
+    }
+    else {
+        user.likedSingers.push(singerId);
+    }
+
+    await singer.save();
+    await user.save();
+
+    res.status(StatusCodes.OK).json({ message: alreadyLiked ? "Singer unliked" : "Singer liked", likes: likes });
+}
+
 module.exports = {
     getAllArtists,
     getSingleArtist,
@@ -176,4 +235,5 @@ module.exports = {
     updateArtist,
     deleteArtist,
     uploadImages,
+    likeSinger,
 }

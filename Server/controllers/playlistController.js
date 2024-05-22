@@ -1,6 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
 const Playlist = require("../models/Playlist");
 const customErrors = require("../errors");
+const User = require("../models/User");
 
 const createPlaylist = async (req, res) => {
     const {
@@ -22,6 +23,8 @@ const createPlaylist = async (req, res) => {
 };
 
 const getAllPlaylist = async (req, res) => {
+    // const { playlistName, tag } = req.query;
+
     const playLists = await Playlist.find({ privacy: "Public" });
     res.status(StatusCodes.OK).json({ playLists });
 };
@@ -58,13 +61,14 @@ const updatePlaylist = async (req, res) => {
         title, 
         description, 
         tags, 
-        songs 
+        songs,
+        privacy,
     } = req.body;
     if(!playlistId) {
         throw new customErrors.BadRequestError("Please provide playlistId");
     }
     // console.log("playlistiD");
-    if(!title && !description && !tags && !songs) {
+    if(!title && !description && !tags && !songs && !privacy) {
         throw new customErrors.BadRequestError("Please fill out atleast one field");
     }
     // console.log("Title");
@@ -80,6 +84,9 @@ const updatePlaylist = async (req, res) => {
     }
     if(description) {
         playlist.description = description;
+    }
+    if(privacy) {
+        playlist.privacy = privacy;
     }
     if(tags && tags.length > 0) {
         const uniqueTags = new Set([...playlist.tags, ...tags]);
@@ -155,6 +162,22 @@ const sharePlaylist = async (req, res) => {
     res.status(StatusCodes.OK).json({ url: url, allowAccess: playlist.allowAccess });
 };
 
+const likedSongs = async (req, res) => {
+    const user = await User.findOne({ _id: req.user.userId });
+    if(!user) {
+        throw new customErrors.UnauthenticatedError("No user found");
+    }
+    res.status(StatusCodes.OK).json({ likedSongs: user.likedSongs, numberOfLikedSongs: user.likedSongs.length });
+}
+
+const likedSingers = async (req, res) => {
+    const user = await User.findOne({ _id: req.user.userId });
+    if(!user) {
+        throw new customErrors.UnauthenticatedError("No user found");
+    }
+    res.status(StatusCodes.OK).json({ likedSingers: user.likedSingers, numberOfLikedSingers: user.likedSingers.length });
+}
+
 module.exports = {
     createPlaylist,
     getAllPlaylist,
@@ -164,4 +187,6 @@ module.exports = {
     updatePlaylist,
     deletePlaylist,
     sharePlaylist,
+    likedSongs,
+    likedSingers,
 };
