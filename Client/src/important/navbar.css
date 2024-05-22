@@ -1,0 +1,101 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    color: #ffffff;
+    padding: 10px 20px;
+    width: 100%;
+}
+
+.menu-icon {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 16px; 
+    padding: 10px;
+    display: inline-block;
+}
+
+.ri-menu-line {
+    color: #ceccc8;
+}
+
+.leftnav, .centernav, .rightnav {
+    display: flex;
+    align-items: center;
+}
+
+.logonav {
+    height: 50px;
+    width: auto;
+    margin-right: 10px;
+    border-radius: 50%;
+    margin-left: 10px;
+}
+
+.namenav h3 {
+    margin: 0;
+    font-size: 24px;
+    color: #ceccc8; 
+}
+
+.centernav form {
+    display: flex;
+}
+
+.search {
+    width: 35vw;
+    height: 40px;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(43, 41, 41);
+    font-size: 16px;
+    outline: none;
+}
+
+.optionsIcon, .searchinform i {
+    font-size: 24px; 
+    color: #ecf0f1;
+    cursor: pointer;
+}
+
+.SignUpBtn {
+    background-color: #e74c3c;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.SignUpBtn:hover {
+    background-color: #c0392b;
+}
+
+@media (max-width: 650px) {
+    .centernav, .rightnav {
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .formsearch {
+        display: none;  
+    }
+    
+    .searchinform {
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+
+    .namenav, .optionsIcon, .SignUpBtn {
+        font-size: smaller;  
+    }
+}

@@ -1,0 +1,35 @@
+.menutoggledmenu {
+    width: 80px; 
+    background-color: #010101; 
+    color: #a9a5a5; 
+    border-right: 1px solid #eee;
+    height: 100vh; 
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); 
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.optionstoggledmenu {
+    flex-grow: 1; 
+}
+
+.optionstoggledmenu div { 
+    padding: 10px 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.optionstoggledmenu div:hover {
+    background-color: #f0f0f0;
+}
+
+.Homeicontoggledmenu, .exploreicontoggledmenu, .libraryicontoggledmenu, .upgradeicontoggledmenu {
+    font-size: 30px;
+    margin-right: 10px;
+    color: #606060; 
+}
+
+

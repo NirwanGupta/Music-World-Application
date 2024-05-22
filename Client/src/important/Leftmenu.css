@@ -1,0 +1,85 @@
+.menu {
+    width: 240px; 
+    background-color: #010101; 
+    color: #a9a5a5; 
+    border-right: 1px solid #eee;
+    height: 100vh; 
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); 
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+.options {
+    flex-grow: 1; 
+}
+
+.options div { 
+    padding: 10px 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.options div:hover {
+    background-color: #f0f0f0;
+}
+
+.Homeicon, .exploreicon, .libraryicon, .upgradeicon {
+    font-size: 25px;
+    margin-right: 10px;
+    color: #606060; 
+}
+
+.homeText, .exploreText, .libraryText ,.upgradeText{
+    font-size: 10px;
+    font-weight: normal;
+    color: #c5c3c3; 
+}
+
+h4, h4 {
+    margin: 0; 
+}
+
+.lowerpart{
+    margin-bottom: 30vh;
+    margin-left: 35px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-top: #f0e9e9;
+}
+.newplaylistbutton {
+    width: 150px;           
+    height: 35px;           
+    border-radius: 15px;    
+    background-color: #242323; 
+    color: #eee;             
+    border: none;            
+    cursor: pointer;         
+    transition: background-color 0.3s ease; 
+}
+
+.newplaylistbutton:hover {
+    background-color: #383838;
+}
+
+.likemusic {
+    padding: 10px 10px;
+    
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.likemusic :hover{
+    background-color: #c5c3c3;
+}
