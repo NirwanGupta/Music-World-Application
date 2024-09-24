@@ -116,6 +116,10 @@ const songSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    plays: {
+      type: Number,
+      default: true,
+    },
     // pastFiveDays: [Interaction],
   },
   { timestamps: true }

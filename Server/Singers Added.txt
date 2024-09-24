@@ -1,0 +1,245 @@
+name: Krishnakumar Kunnath(K.K.)
+userId: 66202b802da2b4d3577f4f8d
+eamil: kk@gmail.com
+
+name: Arijeet Singh
+userId: 661fa94201e5740e9334ada8
+email: arijeetsingh@gmail.com
+
+name: Shubh
+userId: 664c6541ca59a981641adb55
+email: shubh@gmail.com
+
+name: Chandra Brar
+userId: 6652eebe66d4fec56cb2fcab
+email: chandrabrar@gmail.com
+
+name: 
+userId: 
+email:
+
+name: 
+userId: 
+email:
+
+name: 
+userId: 
+email:
+
+name: 
+userId: 
+email:
+
+name: 
+userId: 
+email:
+
+
+
+
+
+
+
+
+
+
+
+
+
+_id
+6620cba42d47a75a26ee5de0
+name
+"Beete Lamhe"
+audio
+"https://res.cloudinary.com/dbmeb5p2d/video/upload/v1713425283/Music-Wo…"
+singerName
+"Krishnakumar Kunnath(K.K.)"
+singer
+6620c48e17c792bdeaf7c3c4
+language
+"Hindi"
+genre
+"Romantic"
+duration
+"4:58"
+likes
+0
+gif
+"https://res.cloudinary.com/dbmeb5p2d/image/upload/v1713213164/Music-Wo…"
+createdAt
+2024-04-18T07:28:36.577+00:00
+updatedAt
+2024-04-18T07:28:36.577+00:00
+__v
+0
+_id
+6620d90ec9ad175e857520e9
+name
+"Oo Mahi"
+audio
+"https://res.cloudinary.com/dbmeb5p2d/video/upload/v1713428379/Music-Wo…"
+singerName
+"Arijit Singh"
+singer
+6620d742c9ad175e857520e5
+language
+"Hindi"
+genre
+"Romantic"
+duration
+"3:53"
+likes
+0
+gif
+"https://res.cloudinary.com/dbmeb5p2d/image/upload/v1713213620/Music-Wo…"
+createdAt
+2024-04-18T08:25:50.178+00:00
+updatedAt
+2024-04-18T08:26:41.342+00:00
+__v
+0
+_id
+6630c6ab69cbe80f547dce37
+name
+"Ve Kamleya"
+audio
+"https://res.cloudinary.com/dbmeb5p2d/video/upload/v1714472465/Music-Wo…"
+singerName
+"Arijit Singh"
+singer
+6620d742c9ad175e857520e5
+language
+"Hindi"
+genre
+"Romantic"
+duration
+"2:58"
+likes
+1
+gif
+"https://res.cloudinary.com/dbmeb5p2d/image/upload/v1713213469/Music-Wo…"
+createdAt
+2024-04-30T10:23:39.844+00:00
+updatedAt
+2024-05-20T16:02:15.401+00:00
+__v
+11
+
+likedBy
+Array (1)
+_id
+664cdaf764b2fab4e6d1b9ed
+name
+"One Love"
+audio
+"https://res.cloudinary.com/dbmeb5p2d/video/upload/v1716312060/Music-Wo…"
+singerName
+"Shubh"
+singer
+664cdadc64b2fab4e6d1b9e9
+language
+"Punjabi"
+genre
+"Hip Hop"
+duration
+"2:39"
+
+likedBy
+Array (empty)
+likes
+0
+gif
+"https://res.cloudinary.com/dbmeb5p2d/image/upload/v1713212956/Music-Wo…"
+createdAt
+2024-05-21T17:33:43.460+00:00
+updatedAt
+2024-05-21T17:33:43.460+00:00
+__v
+0
+_id
+6652ee1d66d4fec56cb2fca8
+name
+"Oo Sajni Re"
+audio
+"https://res.cloudinary.com/dbmeb5p2d/video/upload/v1716710774/Music-Wo…"
+singerName
+"Arijit Singh"
+singer
+6620d742c9ad175e857520e5
+language
+"Hindi"
+genre
+"Romantic"
+duration
+"3:11"
+
+likedBy
+Array (empty)
+likes
+0
+gif
+"https://res.cloudinary.com/dbmeb5p2d/image/upload/v1713213623/Music-Wo…"
+createdAt
+2024-05-26T08:09:01.065+00:00
+updatedAt
+2024-05-26T08:09:01.065+00:00
+__v
+0
+_id
+6652f40866d4fec56cb2fcbb
+name
+"Medal"
+audio
+"https://res.cloudinary.com/dbmeb5p2d/video/upload/v1716712351/Music-Wo…"
+singerName
+"Chandra Brar"
+singer
+6652f30266d4fec56cb2fcb6
+language
+"Punjabi"
+genre
+"Pop"
+duration
+"2:55"
+
+likedBy
+Array (empty)
+likes
+0
+gif
+"https://res.cloudinary.com/dbmeb5p2d/image/upload/v1713213469/Music-Wo…"
+createdAt
+2024-05-26T08:34:16.602+00:00
+updatedAt
+2024-05-26T08:34:16.602+00:00
+__v
+0
+_id
+6652f58966d4fec56cb2fcc0
+name
+"Ghungroo"
+audio
+"https://res.cloudinary.com/dbmeb5p2d/video/upload/v1716712763/Music-Wo…"
+singerName
+"Arijit Singh"
+singer
+6620d742c9ad175e857520e5
+language
+"Hindi"
+genre
+"Hip Hop"
+duration
+"5:02"
+
+likedBy
+Array (empty)
+likes
+0
+gif
+"https://res.cloudinary.com/dbmeb5p2d/image/upload/v1713212792/Music-Wo…"
+createdAt
+2024-05-26T08:40:41.405+00:00
+updatedAt
+2024-05-26T08:40:41.405+00:00
+__v
+0

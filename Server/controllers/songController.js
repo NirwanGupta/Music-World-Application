@@ -7,6 +7,11 @@ const { StatusCodes } = require(`http-status-codes`);
 // const {response} = require(`../utils/responseAI`);
 const {moodDetector, response} = require(`../utils/AI_integration`);
 const userActivity = require(`../models/Activity`);
+const cron = require("node-cron");
+
+// const updateRecentlyPlayed = async(req, res) => {
+
+// }
 
 const getAllSongs = async (req, res) => {
     //  this is to populate artist to songs
@@ -37,12 +42,12 @@ const getAllSongs = async (req, res) => {
     if(sort === 'z-a') {
         filteredSongs.sort('-name');
     }
-    if(sort == "likes") {
+    if(sort === "likes") {
         filteredSongs.sort('likes');
     }
     
     const songs = await filteredSongs;
-    res.status(StatusCodes.OK).json({songs});
+    res.status(StatusCodes.OK).json({songs, count: songs.length});
 };
 
 const getSingleSong = async (req, res) => {
@@ -75,12 +80,6 @@ const addSong = async (req, res) => {
         throw new customErrors.notFoundError("No singer found");
     }
     const song = await Song.create({ name, singerName, genre, duration, audio, language, singer: singer._id });
-
-//   await Singer.findOneAndUpdate(
-//     {name: singerName},
-//     {$push: {songs: song._id}},
-//     {new: true},
-//   ).populate('allsongs');
 
   res.status(StatusCodes.OK).json({ song });
 };
@@ -333,6 +332,41 @@ const updateUserProfile = async (userId) => {
     );
 };
 
+const actionOnSong = async (req, res) => {
+    const { action } = req.body;
+    const { id: songId } = req.params;
+    if(!songId) {
+        throw new customErrors.BadRequestError("No songId passed");
+    }
+    const song = await Song.findOne({ _id: songId });
+    const user = await User.findOne({ _id: req.user.userId });
+    if(!song) {
+        throw new customErrors.notFoundError("No song found");
+    }
+    if(action === "play") {
+        song.plays += 1;
+        user.recentlyPlayed.push(songId);
+    }
+    await song.save();
+    await user.save();
+    res.status(StatusCodes.OK).json({song, plays: song.plays});
+};
+
+const favoriteGenres = async (req, res) => {
+    const user = await User.findOne({_id: req.user.userId});
+    if(!user) {
+        throw new customErrors.notFoundError("No user found");
+    }
+    const { genre } = req.body;
+    if(genre.length === 0) {
+        throw new customErrors.BadRequestError("Please choose at least one genre");
+    }
+    let mySet = new Set([...(user.favoriteGenres || []), ...genre]);
+    user.favoriteGenres = [...mySet];
+    await user.save();
+    res.status(StatusCodes.OK).json({message: "Favorite genres updated successfully"});
+}
+
 module.exports = {
     getAllSongs,
     getSingleSong,
@@ -344,4 +378,5 @@ module.exports = {
     songsWRTmood,
     respondToQuestion,
     updateUserProfile,
+    actionOnSong,
 };

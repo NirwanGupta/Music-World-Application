@@ -16,13 +16,13 @@ const getRecommendations = async (req, res) => {
     const genreBasedSongs = await Song.find({ genre: { $in: favoriteGenres } });
     const singerBasedSongs = await Song.find({ artist: { $in: likedSingers.map(singer => singer._id) } });
     const genreBasedPlaylists = await Playlist.find({ genre: { $in: favoriteGenres } });
-    // const recentlyPlayedSongs = await Song.find({ _id: { $in: recentlyPlayed } });
+    const recentlyPlayedSongs = await Song.find({ _id: { $in: recentlyPlayed } });
 
     const recommendations = {
         songs: {
             genreBased: genreBasedSongs,
             singerBased: singerBasedSongs,
-            recentlyPlayed,
+            recentlyPlayed: recentlyPlayedSongs,
         },
         playlists: genreBasedPlaylists,
     };

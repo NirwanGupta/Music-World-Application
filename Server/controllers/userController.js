@@ -197,6 +197,21 @@ const becomeSinger = async (req, res) => {
     res.status(StatusCodes.OK).json({msg: 'Email sent successfully'});
 }
 
+const favoriteGenres = async (req, res) => {
+    const user = await User.findOne({_id: req.user.userId});
+    if(!user) {
+        throw new customErrors.notFoundError("No user found");
+    }
+    const { genre } = req.body;
+    if(genre.length === 0) {
+        throw new customErrors.BadRequestError("Please choose at least one genre");
+    }
+    let mySet = new Set([...(user.favoriteGenres || []), ...genre]);
+    user.favoriteGenres = [...mySet];
+    await user.save();
+    return res.status(StatusCodes.OK).json({message: "Favorite genres updated successfully"});
+}
+
 module.exports = {
     getAllUsers,
     getSingleUser,
@@ -205,4 +220,5 @@ module.exports = {
     updatePassword,
     imageUpload,
     becomeSinger,
+    favoriteGenres,
 };

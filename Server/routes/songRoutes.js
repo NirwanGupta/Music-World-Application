@@ -12,11 +12,13 @@ const {
   likeSong,
   songsWRTmood,
   respondToQuestion,
+  actionOnSong,
 } = require(`../controllers/songController`);
 
 const recommendations = require(`../controllers/recommendationController`);
 
 router.route(`/recommendations`).get(authenticateUser, recommendations);
+router.route(`/action/:id`).post([authenticateUser], actionOnSong);
 router.route(`/`).get(authenticateUser, getAllSongs);
 router.route(`/addSong`).post(authenticateUser, addSong);
 router.route(`/uploadSong`).post(authenticateUser, audioUpload);
