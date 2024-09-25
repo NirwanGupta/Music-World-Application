@@ -1,13 +1,16 @@
 const cron = require('node-cron');
 const User = require('../models/User');
-const { updateUserProfile } = require('../controllers/songController');
+const updateRedisData = require('./updateRedisData');
 
-const task = cron.schedule('0 0 * * *', async () => {
+// '*/2 * * * *' - > 2minutes
+// '0 0 * * *' -> 12am
+
+const cronTask = cron.schedule('0 0 * * *', async () => {
     try {
         const users = await User.find({}).select('_id');
-        for (const user of users) { // Corrected for-loop
+        for (const user of users) { 
             console.log(`Updating profile for user: ${user._id}`);
-            await updateUserProfile(user._id);
+            await updateRedisData(user._id);
         }
         console.log('User profiles updated successfully');
     } catch (error) {
@@ -15,4 +18,4 @@ const task = cron.schedule('0 0 * * *', async () => {
     }
 });
 
-module.exports = task;
+module.exports = cronTask;

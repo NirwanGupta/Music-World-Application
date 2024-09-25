@@ -2,16 +2,12 @@ require(`dotenv`).config();
 require(`express-async-errors`);
 
 const express = require(`express`);
-// const AWS = require(`aws-sdk`);
-// const multer = require(`multer`);
 const app = express();
+const cronTask = require(`./utils/cron`);
 
 const connectDB = require(`./db/connect`);
 
 const fileUpload = require(`express-fileupload`);
-// const multer = require(`multer`);
-
-// const upload = multer({ dest: "uploads/" });
 const cloudinary = require(`cloudinary`).v2;
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -28,19 +24,9 @@ const logActivityRoutes = require(`./routes/logActivityRoute`);
 
 const errorHandlerMiddleware = require(`./middleware/error-handler`);
 const notFoundMiddleware = require(`./middleware/not-found`);
-// const sessionHandler = require("./middleware/sessionMiddleware");
 
 const cookieParser = require(`cookie-parser`);
 const morgan = require(`morgan`);
-
-const {cronTask} = require(`./utils`);
-
-// app.use(session({
-//   secret: 'your_secret_key',
-//   resave: false,
-//   saveUninitialized: true,
-// }));
-// app.use(sessionHandler);
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
@@ -60,12 +46,11 @@ const port = process.env.PORT || 5000;
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
-const start = async() => {
+const start = async () => {
     try {
         await connectDB(process.env.MONGO_URI);
         console.log("Connection established");
         app.listen(port, () => {
-            console.log(cronTask);
             cronTask.start();
             console.log(`Server listening on port ${port}`);
         });
